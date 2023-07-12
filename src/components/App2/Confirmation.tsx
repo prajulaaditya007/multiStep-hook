@@ -1,5 +1,3 @@
-import React from "react";
-
 type ConfirmationProps = {
   userInformation: UserInformation;
   personalInformation: PersonalInformation;
