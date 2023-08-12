@@ -4,7 +4,7 @@ type PersonalInformationProps = {
   personalInformation: PersonalInformation;
   onNext: () => void;
   onPrevious: () => void;
-  onChange: (data: Partial<PersonalInformation>) => void;
+  onChange: (data: Partial<PersonalInformation>) => void | any;
 };
 
 const PersonalInformation = ({
