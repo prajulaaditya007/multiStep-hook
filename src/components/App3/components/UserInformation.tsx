@@ -1,20 +1,29 @@
 import React from "react";
-import { UserInformation } from "../App3/types";
+import { useDispatch } from "react-redux";
+import { setUserInformation } from "../redux/multiStepFormSlice";
+import { UserInformation } from "../types";
 
 type UserInformationProps = {
-  userInformation: UserInformation;
+  formData: UserInformation;
   onNext: () => void;
   onChange: (data: Partial<UserInformation>) => void;
 };
 
 const UserInformation = ({
-  userInformation,
+  formData,
   onNext,
   onChange,
 }: UserInformationProps) => {
+  const dispatch = useDispatch();
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     onChange({ [name]: value });
+  };
+
+  const handleNext = () => {
+    dispatch(setUserInformation(formData));
+    onNext();
   };
 
   return (
@@ -26,7 +35,7 @@ const UserInformation = ({
           <input
             type="text"
             name="firstName"
-            value={userInformation.firstName}
+            value={formData.firstName}
             onChange={handleInputChange}
             required
           />
@@ -36,7 +45,7 @@ const UserInformation = ({
           <input
             type="text"
             name="lastName"
-            value={userInformation.lastName}
+            value={formData.lastName}
             onChange={handleInputChange}
             required
           />
@@ -46,12 +55,12 @@ const UserInformation = ({
           <input
             type="email"
             name="email"
-            value={userInformation.email}
+            value={formData.email}
             onChange={handleInputChange}
             required
           />
         </label>
-        <button type="button" onClick={onNext}>
+        <button type="button" onClick={handleNext}>
           Next
         </button>
       </form>

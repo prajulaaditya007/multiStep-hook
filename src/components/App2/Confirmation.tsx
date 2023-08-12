@@ -1,3 +1,5 @@
+import { UserInformation, PersonalInformation } from "../App3/types";
+
 type ConfirmationProps = {
   userInformation: UserInformation;
   personalInformation: PersonalInformation;

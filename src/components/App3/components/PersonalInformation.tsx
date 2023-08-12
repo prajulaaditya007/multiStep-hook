@@ -1,22 +1,31 @@
 import React from "react";
-import { PersonalInformation } from "../App3/types";
+import { useDispatch } from "react-redux";
+import { setPersonalInformation } from "../redux/multiStepFormSlice";
+import { PersonalInformation } from "../types";
 
 type PersonalInformationProps = {
-  personalInformation: PersonalInformation;
+  formData: PersonalInformation;
   onNext: () => void;
   onPrevious: () => void;
-  onChange: (data: Partial<PersonalInformation>) => void | any;
+  onChange: (data: Partial<PersonalInformation>) => void;
 };
 
 const PersonalInformation = ({
-  personalInformation,
+  formData,
   onNext,
   onPrevious,
   onChange,
 }: PersonalInformationProps) => {
+  const dispatch = useDispatch();
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     onChange({ [name]: value });
+  };
+
+  const handleNext = () => {
+    dispatch(setPersonalInformation(formData));
+    onNext();
   };
 
   return (
@@ -28,7 +37,7 @@ const PersonalInformation = ({
           <input
             type="text"
             name="dateOfBirth"
-            value={personalInformation.dateOfBirth}
+            value={formData.dateOfBirth}
             onChange={handleInputChange}
             required
           />
@@ -37,7 +46,7 @@ const PersonalInformation = ({
           Gender:
           <select
             name="gender"
-            value={personalInformation.gender}
+            value={formData.gender}
             onChange={handleInputChange}
             required
           >
@@ -50,7 +59,7 @@ const PersonalInformation = ({
           Marital Status:
           <select
             name="maritalStatus"
-            value={personalInformation.maritalStatus}
+            value={formData.maritalStatus}
             onChange={handleInputChange}
             required
           >
@@ -63,7 +72,7 @@ const PersonalInformation = ({
         <button type="button" onClick={onPrevious}>
           Previous
         </button>
-        <button type="button" onClick={onNext}>
+        <button type="button" onClick={handleNext}>
           Next
         </button>
       </form>
